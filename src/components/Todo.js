@@ -1,4 +1,5 @@
-import React, { useContext, memo } from "react"
+import React, { memo } from "react"
+import { connect } from "react-redux"
 import {
   IconButton,
   ListItemSecondaryAction,
@@ -10,10 +11,9 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import EditIcon from "@material-ui/icons/Edit"
 import useToggleState from "../hooks/useToggleState"
 import EditTodo from "./EditTodo"
-import { DispatchContext } from "../contexts/todosContext"
+import { toggleCompletion, removeTodo } from "../redux/todo/todo.actions.js"
 
-function Todo({ todo }) {
-  const dispatchTodoAction = useContext(DispatchContext)
+function Todo({ todo, toggleCompletion, removeTodo }) {
   const { id, task, completed } = todo
   const [isEditing, toggleIsEditing] = useToggleState(false)
 
@@ -27,20 +27,10 @@ function Todo({ todo }) {
         <EditTodo todo={todo} onEditComplete={toggleIsEditing} />
       ) : (
         <>
-          <Checkbox
-            checked={completed}
-            onClick={() =>
-              dispatchTodoAction({ type: "TOGGLE_TODO", payload: id })
-            }
-          />
+          <Checkbox checked={completed} onClick={() => toggleCompletion(id)} />
           <ListItemText style={textStyle}>{task}</ListItemText>
           <ListItemSecondaryAction>
-            <IconButton
-              aria-label="Delete"
-              onClick={() =>
-                dispatchTodoAction({ type: "REMOVE_TODO", payload: id })
-              }
-            >
+            <IconButton aria-label="Delete" onClick={() => removeTodo(id)}>
               <DeleteIcon></DeleteIcon>
             </IconButton>
             <IconButton aria-label="Edit" onClick={toggleIsEditing}>
@@ -53,4 +43,9 @@ function Todo({ todo }) {
   )
 }
 
-export default memo(Todo)
+const mapDispatchToProps = (dispatch) => ({
+  toggleCompletion: (todoId) => dispatch(toggleCompletion(todoId)),
+  removeTodo: (todoId) => dispatch(removeTodo(todoId)),
+})
+
+export default connect(undefined, mapDispatchToProps)(memo(Todo))

@@ -1,10 +1,13 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Paper, List, Divider } from "@material-ui/core"
+import { useSelector } from "react-redux"
 import Todo from "./Todo"
-import { TodosContext } from "../contexts/todosContext"
 
 function TodoList() {
-  const todos = useContext(TodosContext)
+  const { todos } = useSelector((state) => {
+    console.log({ state })
+    return state.todosStore
+  })
 
   return todos.length > 0 ? (
     <Paper>

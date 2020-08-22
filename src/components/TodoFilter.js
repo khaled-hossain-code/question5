@@ -41,8 +41,8 @@ function FilterTodo() {
           </FormControl>
         </Grid>
         <Grid item xs={3}>
-            <Button size="small">Clear completed</Button>
-          </Grid>
+          <Button size="small">Clear completed</Button>
+        </Grid>
       </Grid>
     </Paper>
   )

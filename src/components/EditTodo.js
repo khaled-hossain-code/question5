@@ -1,15 +1,15 @@
-import React, { useContext } from "react"
+import React from "react"
+import { connect } from "react-redux"
 import { TextField } from "@material-ui/core"
 import useInputState from "../hooks/useInputState"
-import { DispatchContext } from "../contexts/todosContext"
+import { updateTodo } from "../redux/todo/todo.actions.js"
 
-function EditTodo({ todo: { id, task }, onEditComplete }) {
-  const dispatchTodoAction = useContext(DispatchContext)
+function EditTodo({ todo: { id, task }, onEditComplete, updateTodo }) {
   const [taskText, setTaskText] = useInputState(task)
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatchTodoAction({ type: "UPDATE_TODO", payload: { id, taskText } })
+    updateTodo({ id, taskText })
     onEditComplete()
   }
 
@@ -26,4 +26,8 @@ function EditTodo({ todo: { id, task }, onEditComplete }) {
   )
 }
 
-export default EditTodo
+const mapDispatchToProps = (dispatch) => ({
+  updateTodo: (updatedTodo) => dispatch(updateTodo(updatedTodo)),
+})
+
+export default connect(undefined, mapDispatchToProps)(EditTodo)

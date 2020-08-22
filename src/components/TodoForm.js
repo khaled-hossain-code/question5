@@ -1,15 +1,15 @@
-import React, { useContext } from "react"
+import React from "react"
+import { connect } from "react-redux"
 import { Paper, TextField } from "@material-ui/core"
 import useInputState from "../hooks/useInputState"
-import { DispatchContext } from "../contexts/todosContext"
+import { addTodo } from "../redux/todo/todo.actions.js"
 
-function TodoForm() {
-  const dispatchTodoAction = useContext(DispatchContext)
+function TodoForm({ addTodo }) {
   const [value, handleChange, reset] = useInputState()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    dispatchTodoAction({ type: "ADD_TODO", payload: value })
+    addTodo(value)
     reset()
   }
 
@@ -28,4 +28,8 @@ function TodoForm() {
   )
 }
 
-export default TodoForm
+const mapDispatchToProps = (dispatch) => ({
+  addTodo: (taskText) => dispatch(addTodo(taskText)),
+})
+
+export default connect(undefined, mapDispatchToProps)(TodoForm)
