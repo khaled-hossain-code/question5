@@ -4,7 +4,7 @@ import useInputState from "../hooks/useInputState"
 import { DispatchContext } from "../contexts/todosContext"
 
 function EditTodo({ todo: { id, task }, onEditComplete }) {
-  const { dispatchTodoAction } = useContext(DispatchContext)
+  const dispatchTodoAction = useContext(DispatchContext)
   const [taskText, setTaskText] = useInputState(task)
 
   const handleSubmit = (event) => {

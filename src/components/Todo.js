@@ -13,7 +13,7 @@ import EditTodo from "./EditTodo"
 import { DispatchContext } from "../contexts/todosContext"
 
 function Todo({ todo }) {
-  const { dispatchTodoAction } = useContext(DispatchContext)
+  const dispatchTodoAction = useContext(DispatchContext)
   const { id, task, completed } = todo
   const [isEditing, toggleIsEditing] = useToggleState(false)
 

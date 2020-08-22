@@ -4,7 +4,7 @@ import useInputState from "../hooks/useInputState"
 import { DispatchContext } from "../contexts/todosContext"
 
 function TodoForm() {
-  const { dispatchTodoAction } = useContext(DispatchContext)
+  const dispatchTodoAction = useContext(DispatchContext)
   const [value, handleChange, reset] = useInputState()
 
   const handleSubmit = (event) => {
