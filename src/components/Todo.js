@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, memo } from "react"
 import {
   IconButton,
   ListItemSecondaryAction,
@@ -29,11 +29,18 @@ function Todo({ todo }) {
         <>
           <Checkbox
             checked={completed}
-            onClick={() => dispatchTodoAction({type:"TOGGLE_TODO",payload:id})}
+            onClick={() =>
+              dispatchTodoAction({ type: "TOGGLE_TODO", payload: id })
+            }
           />
           <ListItemText style={textStyle}>{task}</ListItemText>
           <ListItemSecondaryAction>
-            <IconButton aria-label="Delete" onClick={() => dispatchTodoAction({type:"REMOVE_TODO",payload:id})}>
+            <IconButton
+              aria-label="Delete"
+              onClick={() =>
+                dispatchTodoAction({ type: "REMOVE_TODO", payload: id })
+              }
+            >
               <DeleteIcon></DeleteIcon>
             </IconButton>
             <IconButton aria-label="Edit" onClick={toggleIsEditing}>
@@ -46,4 +53,4 @@ function Todo({ todo }) {
   )
 }
 
-export default Todo
+export default memo(Todo)
