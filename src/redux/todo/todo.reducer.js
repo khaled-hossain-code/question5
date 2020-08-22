@@ -1,6 +1,13 @@
 import _ from "lodash"
 import { v4 as uuidv4 } from "uuid"
-import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO, UPDATE_TODO } from "./todo.types"
+import {
+  ADD_TODO,
+  REMOVE_TODO,
+  REMOVE_COMPLETED_TODO,
+  TOGGLE_TODO,
+  UPDATE_TODO,
+  UPDATE_TODO_DISPLAY,
+} from "./todo.types"
 
 const INITIAL_STATE = {
   todos: [],
@@ -33,6 +40,12 @@ const removeTodo = (newState, todoId) => {
   return newState
 }
 
+const removeCompletedTodo = (newState) => {
+  newState.todos = newState.todos.filter((todo) => !todo.completed)
+
+  return newState
+}
+
 const toggleCompletion = (newState, todoId) => {
   newState.todos = newState.todos.map((todo) =>
     todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
@@ -49,11 +62,19 @@ const updateTodo = (newState, { id, taskText }) => {
   return newState
 }
 
+const updateTodoDisplay = (newState, isDisplaying) => {
+  newState.isDisplaying = isDisplaying
+
+  return newState
+}
+
 const selectAction = {
   [ADD_TODO]: addTodo,
   [REMOVE_TODO]: removeTodo,
+  [REMOVE_COMPLETED_TODO]: removeCompletedTodo,
   [TOGGLE_TODO]: toggleCompletion,
   [UPDATE_TODO]: updateTodo,
+  [UPDATE_TODO_DISPLAY]: updateTodoDisplay,
 }
 
 export default todoReducer

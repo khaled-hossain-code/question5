@@ -1,17 +1,11 @@
 import { createSelector } from "reselect"
 
-const selectTodos = (state) => state.todos
+const selectTodos = (state) => state.todosStore.todos
 
-export const selectCompleted = createSelector(
-  [selectTodos],
-  (completeStatus) => shop.collections
+export const selectCompletedTodos = createSelector([selectTodos], (todos) => {
+  return todos.filter((todo) => todo.completed)
+})
+
+export const selectActiveTodos = createSelector([selectTodos], (todos) =>
+  todos.filter((todo) => !todo.completed)
 )
-
-export const selectCartItemsCount = createSelector(
-  [selectCartItems],
-  cartItems =>
-    cartItems.reduce(
-      (accumulatedQty, item) => accumulatedQty + item.quantity,
-      0
-    )
-);
