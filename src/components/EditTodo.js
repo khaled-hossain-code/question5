@@ -1,13 +1,15 @@
-import React from "react"
+import React, { useContext } from "react"
 import { TextField } from "@material-ui/core"
 import useInputState from "../hooks/useInputState"
+import { todosContext } from "../contexts/todosContext"
 
-function EditTodo({ todo: { id, task }, onUpdateTodo, onEditComplete }) {
+function EditTodo({ todo: { id, task }, onEditComplete }) {
+  const { dispatchTodoAction } = useContext(todosContext)
   const [taskText, setTaskText] = useInputState(task)
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    onUpdateTodo(id, taskText)
+    dispatchTodoAction({ type: "UPDATE_TODO", payload: { id, taskText } })
     onEditComplete()
   }
 
@@ -15,16 +17,11 @@ function EditTodo({ todo: { id, task }, onUpdateTodo, onEditComplete }) {
     <form
       style={{
         width: "70%",
-        margin: "4px 0 4px 1rem"
+        margin: "4px 0 4px 1rem",
       }}
       onSubmit={handleSubmit}
     >
-      <TextField
-        value={taskText}
-        onChange={setTaskText}
-        fullWidth
-        autoFocus
-      />
+      <TextField value={taskText} onChange={setTaskText} fullWidth autoFocus />
     </form>
   )
 }
